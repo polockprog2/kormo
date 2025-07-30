@@ -9,13 +9,8 @@ import { Switch } from '../ui/switch';
 import { ArrowLeft, Eye, EyeOff, Globe, User, Briefcase } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../AuthContext';
-import type { Page } from '../AppRouter';
 
-interface RegisterProps {
-  navigateTo: (page: Page) => void;
-}
-
-export function Register({ navigateTo }: RegisterProps) {
+export function Register({ navigateTo }) {
   const { language, toggleLanguage, t } = useLanguage();
   const { register, loading } = useAuth();
   const [formData, setFormData] = useState({
@@ -25,18 +20,17 @@ export function Register({ navigateTo }: RegisterProps) {
     confirmPassword: '',
     phone: '',
     location: '',
-    role: '' as 'client' | 'worker' | ''
+    role: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const cities = ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'];
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -61,13 +55,12 @@ export function Register({ navigateTo }: RegisterProps) {
         location: formData.location,
         role: formData.role
       });
-      // Navigation will be handled by the app router based on user role
-    } catch (error: any) {
+    } catch (error) {
       setError(error.message || 'Registration failed');
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -77,7 +70,6 @@ export function Register({ navigateTo }: RegisterProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <div className="w-12 h-12 bg-kajkhuji-green rounded-lg flex items-center justify-center">
@@ -85,8 +77,7 @@ export function Register({ navigateTo }: RegisterProps) {
             </div>
             <span className="text-2xl font-bold text-kajkhuji-green">KajKhuji</span>
           </div>
-          
-          {/* Language Toggle */}
+
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Label htmlFor="language-toggle" className="text-sm">
               {language === 'en' ? 'EN' : 'বাং'}
@@ -103,9 +94,7 @@ export function Register({ navigateTo }: RegisterProps) {
         <Card>
           <CardHeader>
             <CardTitle className="text-center text-2xl">{t('nav.register')}</CardTitle>
-            <p className="text-center text-gray-600">
-              Join KajKhuji today
-            </p>
+            <p className="text-center text-gray-600">Join KajKhuji today</p>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -115,13 +104,12 @@ export function Register({ navigateTo }: RegisterProps) {
                 </Alert>
               )}
 
-              {/* Role Selection */}
               <div className="space-y-2">
                 <Label>I want to</Label>
                 <div className="grid grid-cols-2 gap-3">
                   <Button
                     type="button"
-                    variant={formData.role === 'worker' ? "default" : "outline"}
+                    variant={formData.role === 'worker' ? 'default' : 'outline'}
                     className={`h-auto p-4 ${formData.role === 'worker' ? 'bg-kajkhuji-green hover:bg-kajkhuji-green/90' : 'border-kajkhuji-green text-kajkhuji-green hover:bg-kajkhuji-green hover:text-white'}`}
                     onClick={() => handleInputChange('role', 'worker')}
                   >
@@ -133,7 +121,7 @@ export function Register({ navigateTo }: RegisterProps) {
                   </Button>
                   <Button
                     type="button"
-                    variant={formData.role === 'client' ? "default" : "outline"}
+                    variant={formData.role === 'client' ? 'default' : 'outline'}
                     className={`h-auto p-4 ${formData.role === 'client' ? 'bg-kajkhuji-green hover:bg-kajkhuji-green/90' : 'border-kajkhuji-green text-kajkhuji-green hover:bg-kajkhuji-green hover:text-white'}`}
                     onClick={() => handleInputChange('role', 'client')}
                   >

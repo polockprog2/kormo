@@ -5,15 +5,8 @@ import { Badge } from '../ui/badge';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { ArrowLeft, MapPin, Calendar, DollarSign, Star, User, Briefcase } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
-import type { Page, UserRole } from '../AppRouter';
 
-interface JobDetailsProps {
-  navigateTo: (page: Page) => void;
-  jobId?: number;
-  userRole: UserRole;
-}
-
-export function JobDetails({ navigateTo, jobId, userRole }: JobDetailsProps) {
+export function JobDetails({ navigateTo, jobId, userRole }) {
   const { t } = useLanguage();
 
   const job = {
